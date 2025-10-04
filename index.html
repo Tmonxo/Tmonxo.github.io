@@ -1,712 +1,1111 @@
-<style>
-        body {
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉 HAPPY BIRTHDAAAY WINIYTI HBIBTIIII 💝</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * {
             margin: 0;
-            overflow: hidden; 
-            background-color: #000000; 
-            color: white; 
-            font-family: 'Courier New', monospace; 
+            padding: 0;
+            box-sizing: border-box;
         }
-        canvas {
-            display: block; 
-            width: 100%; 
-            height: 100%; 
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
         }
-        #ui {
+
+        /* Particules flottantes */
+        .particles {
             position: absolute;
-            top: 15px; 
-            width: 100%;
-            text-align: center;
-            z-index: 100; 
-            pointer-events: none; 
-        }
-        #info {
-            font-size: 14px;
-            padding: 10px 18px; 
-            background-color: rgba(25, 30, 50, 0.35); 
-            border-radius: 10px; 
-            display: inline-block;
-            text-shadow: 0 0 5px rgba(0, 128, 255, 0.8); 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            backdrop-filter: blur(10px); 
-            -webkit-backdrop-filter: blur(10px); 
-            transition: all 0.3s ease; 
-            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05); 
-        }
-        #loading {
-            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: #000;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .heart {
+            color: #ff6b6b;
+            font-size: 20px;
+            animation: heartbeat 2s ease-in-out infinite;
+        }
+
+        .star {
+            color: #ffd93d;
+            font-size: 16px;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Container principal */
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
             display: flex;
-            flex-direction: column; 
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            z-index: 1000; 
-            transition: opacity 0.6s ease-out; 
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
         }
-        #loading span {
-            font-size: 24px;
-            letter-spacing: 2px;
-            margin-bottom: 15px; 
+
+        /* Titre principal */
+        .main-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            animation: titleGlow 3s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
         }
-        #progress-container {
-             width: 60%;
-             max-width: 300px;
-             height: 6px;
-             background-color: rgba(255, 255, 255, 0.1);
-             border-radius: 3px;
-             overflow: hidden; 
+
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 0 0 20px rgba(255, 107, 107, 0.8); }
+            50% { text-shadow: 0 0 40px rgba(255, 107, 107, 1), 0 0 60px rgba(255, 215, 61, 0.8); }
         }
-        #progress {
+
+        .subtitle {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: white;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInUp 2s ease forwards 0.5s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Lettre d'amour */
+        .love-letter {
+            position: relative;
+            width: 450px;
+            height: 300px;
+            margin: 40px auto;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: all 0.8s ease;
+            opacity: 0;
+            animation: fadeInScale 2s ease forwards 1s;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .envelope {
+            position: absolute;
+            width: 100%;
             height: 100%;
-            width: 0%; 
-            background: linear-gradient(90deg, #00a2ff, #00ffea); 
-            transition: width 0.3s ease; 
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 25%, #fecfef 50%, #a8edea 75%, #fed6e3 100%);
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4), 0 5px 15px rgba(255, 182, 193, 0.3);
+            overflow: hidden;
+            border: 4px solid #fff;
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            animation: envelopeGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes envelopeGlow {
+            0% { 
+                box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4), 0 5px 15px rgba(255, 182, 193, 0.3);
+            }
+            100% { 
+                box-shadow: 0 20px 50px rgba(255, 107, 107, 0.6), 0 10px 25px rgba(255, 182, 193, 0.5),
+                           0 0 30px rgba(255, 215, 61, 0.3);
+            }
+        }
+
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 225px solid transparent;
+            border-right: 225px solid transparent;
+            border-top: 150px solid #ff6b6b;
+            z-index: 2;
+            transition: all 0.8s ease;
+        }
+
+        .envelope.open::before {
+            transform: translateX(-50%) rotateX(180deg);
+            opacity: 0;
+            transition: all 0.8s ease;
+        }
+
+        .letter-content {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            right: 25px;
+            bottom: 25px;
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 12px;
+            padding: 25px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 18px;
+            color: #333;
+            opacity: 0;
+            transform: translateY(30px) scale(0.9);
+            transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: inset 0 2px 10px rgba(255, 182, 193, 0.2), 
+                       inset 0 0 20px rgba(255, 215, 61, 0.1),
+                       0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            border: 2px solid rgba(255, 107, 107, 0.1);
+        }
+
+        .envelope.open .letter-content {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            animation: letterReveal 1s ease-out forwards;
+        }
+
+        @keyframes letterReveal {
+            0% { 
+                opacity: 0;
+                transform: translateY(30px) scale(0.9) rotateX(-10deg);
+            }
+            50% { 
+                opacity: 0.7;
+                transform: translateY(-5px) scale(1.02) rotateX(0deg);
+            }
+            100% { 
+                opacity: 1;
+                transform: translateY(0) scale(1) rotateX(0deg);
+            }
+        }
+
+        .letter-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 22px;
+            font-weight: 600;
+            line-height: 1.6;
+            text-align: center;
+            color: #d81b60;
+            text-shadow: 0 2px 8px rgba(216, 27, 96, 0.3);
+            letter-spacing: 0.5px;
+        }
+
+        .letter-text strong {
+            font-size: 26px;
+            font-weight: 800;
+            display: block;
+            margin: 8px 0;
+            animation: heartPulse 1.5s ease-in-out infinite;
+            text-transform: uppercase;
+        }
+
+        @keyframes textShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes heartPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Boutons d'action */
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+            opacity: 0;
+            animation: fadeInUp 2s ease forwards 1.5s;
+        }
+
+        .btn {
+            padding: 18px 35px;
+            font-size: 18px;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #ff9a9e, #ffd93d);
+            background-size: 300% 300%;
+            color: white;
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4), 0 3px 10px rgba(255, 215, 61, 0.2);
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.6), 0 8px 20px rgba(255, 215, 61, 0.4);
+            animation: buttonPulse 0.6s ease-in-out infinite alternate;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1, #a8edea, #45b7d1);
+            background-size: 300% 300%;
+            color: white;
+            box-shadow: 0 8px 20px rgba(78, 205, 196, 0.4), 0 3px 10px rgba(69, 183, 209, 0.2);
+            animation: gradientShift 3s ease-in-out infinite reverse;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(78, 205, 196, 0.6), 0 8px 20px rgba(69, 183, 209, 0.4);
+            animation: buttonPulse 0.6s ease-in-out infinite alternate;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes buttonPulse {
+            0% { transform: translateY(-5px) scale(1.05); }
+            100% { transform: translateY(-7px) scale(1.08); }
+        }
+
+        /* Gâteau d'anniversaire */
+        .cake-container {
+            position: relative;
+            margin: 40px 0;
+            opacity: 0;
+            animation: fadeInUp 2s ease forwards 2s;
+        }
+
+        .cake {
+            width: 140px;
+            height: 90px;
+            background: linear-gradient(45deg, #8B4513, #D2691E, #CD853F, #8B4513);
+            background-size: 300% 300%;
+            border-radius: 15px 15px 8px 8px;
+            position: relative;
+            margin: 0 auto;
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.4), 0 3px 10px rgba(210, 105, 30, 0.3);
+            animation: cakeGlow 3s ease-in-out infinite alternate;
+            transition: all 0.3s ease;
+        }
+
+        .cake::after {
+            content: '🎂';
+            position: absolute;
+            top: -15px;
+            right: -10px;
+            font-size: 20px;
+            animation: float 2s ease-in-out infinite;
+        }
+
+        @keyframes cakeGlow {
+            0% { 
+                box-shadow: 0 8px 25px rgba(139, 69, 19, 0.4), 0 3px 10px rgba(210, 105, 30, 0.3);
+                background-position: 0% 50%;
+            }
+            100% { 
+                box-shadow: 0 12px 35px rgba(139, 69, 19, 0.6), 0 5px 15px rgba(210, 105, 30, 0.5),
+                           0 0 20px rgba(255, 215, 61, 0.2);
+                background-position: 100% 50%;
+            }
+        }
+
+        .cake::before {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: 10px;
+            right: 10px;
+            height: 24px;
+            background: linear-gradient(45deg, #FFB6C1, #FFC0CB, #FFE4E1, #FFB6C1);
+            background-size: 200% 200%;
+            border-radius: 12px;
+            animation: creamShimmer 2s ease-in-out infinite;
+            box-shadow: 0 2px 8px rgba(255, 182, 193, 0.3);
+        }
+
+        @keyframes creamShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .candle {
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 25px;
+            background: #FFD700;
             border-radius: 3px;
         }
-        #controls {
+
+        .flame {
             position: absolute;
-            bottom: 20px; 
+            top: -8px;
             left: 50%;
-            transform: translateX(-50%); 
-            z-index: 100;
-            text-align: center;
-            pointer-events: all; 
-            background-color: rgba(25, 30, 50, 0.4); 
-            padding: 15px 25px; 
-            border-radius: 12px; 
-            border: 1px solid rgba(255, 255, 255, 0.12); 
-            backdrop-filter: blur(12px); 
-             -webkit-backdrop-filter: blur(12px); 
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+            transform: translateX(-50%);
+            width: 8px;
+            height: 10px;
+            background: radial-gradient(circle, #ff6b6b, #ffd93d);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: flicker 1s ease-in-out infinite alternate;
         }
-        button {
-            background: rgba(0, 80, 180, 0.7); 
-            color: white;
-            border: 1px solid rgba(0, 180, 255, 0.6); 
-            border-radius: 6px;
-            padding: 8px 15px;
-            margin: 0 8px;
-            cursor: pointer;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            transition: all 0.25s ease;
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1); }
+            100% { transform: translateX(-50%) scale(1.1) rotate(2deg); }
         }
-        button:hover {
-            background: rgba(0, 110, 220, 0.9); 
-            border-color: rgba(0, 210, 255, 0.9);
-            transform: translateY(-1px);
-            box-shadow: 0 3px 8px rgba(0, 150, 255, 0.3);
+
+        /* Messages d'amour qui apparaissent */
+        .love-messages {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
         }
-        #color-picker {
-            margin-top: 15px; 
-            display: flex;
-            justify-content: center;
-            gap: 12px;
+
+        .love-message {
+            position: absolute;
+            font-family: 'Dancing Script', cursive;
+            font-size: 24px;
+            color: #ff6b6b;
+            opacity: 0;
+            animation: floatMessage 4s ease-out forwards;
         }
-        .color-option {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.2); 
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: inset 0 0 4px rgba(0,0,0,0.4); 
+
+        @keyframes floatMessage {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) scale(0.5);
+            }
+            20% {
+                opacity: 1;
+                transform: translateY(50vh) scale(1);
+            }
+            80% {
+                opacity: 1;
+                transform: translateY(10vh) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-10vh) scale(0.5);
+            }
         }
-        .color-option:hover {
-            transform: scale(1.15);
-            border-color: rgba(255, 255, 255, 0.7); 
+
+        /* Responsive avec effets améliorés */
+        @media (max-width: 768px) {
+            .love-letter {
+                width: 350px;
+                height: 240px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .btn {
+                width: 250px;
+                font-size: 16px;
+                padding: 12px 25px;
+            }
+            
+            .main-title {
+                font-size: clamp(2.5rem, 10vw, 4.5rem);
+            }
         }
-         .color-option.active {
-             transform: scale(1.18);
-             border-color: white;
-             box-shadow: 0 0 10px rgba(255, 255, 255, 0.7); 
-         }
+
+        /* Nouveaux effets visuels épiques */
+        .love-letter:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .main-title:hover {
+            animation: superGlow 1s ease-in-out, megaBounce 1s ease-in-out;
+        }
+
+        .cake:hover {
+            animation: megaBounce 1s ease-in-out infinite;
+        }
+
+        /* Effets de particules améliorés */
+        .particle:hover {
+            transform: scale(2) !important;
+            transition: all 0.3s ease;
+        }
+
+        /* Animation de confettis */
+        @keyframes confetti {
+            0% {
+                transform: translateY(-100vh) rotateZ(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotateZ(720deg);
+            }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            animation: confetti 3s linear infinite;
+        }
     </style>
+</head>
+<body>
+    <!-- Particules en arrière-plan -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Messages d'amour flottants -->
+    <div class="love-messages" id="loveMessages"></div>
 
-    <div id="loading">
-        <span>Initializing Particles...</span>
-        <div id="progress-container">
-             <div id="progress"></div>
+    <!-- Contenu principal -->
+    <div class="container">
+        <h1 class="main-title">🎉 Happy Birthday 🎉</h1>
+        <h2 class="subtitle">WINIYTI HBIBTI DOUDOUCHTIIIII 💕</h2>
+        
+        <!-- Gâteau d'anniversaire -->
+        <div class="cake-container">
+            <div class="cake">
+                <div class="candle">
+                    <div class="flame"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lettre d'amour interactive -->
+        <div class="love-letter" id="loveLetter">
+            <div class="envelope" id="envelope">
+                <div class="letter-content">
+                    <div class="letter-text">
+                        🎉� HAPPY BIRTHDAY �🎉<br><br>
+                        
+                        <strong>YA AGHLA MA3ENDI</strong> �<br>
+                        <strong>KANBGHIK O KANMOUTE 3LIK</strong> 💕<br><br>
+                        
+                        <strong>YAAA JENTI O KAAAWNI</strong> 👑<br>
+                        <strong>O KOUUUUNSSSSSIIIIIIII</strong> 💫 �<br><br>
+                        
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Boutons d'action -->
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="explosionDamour()">💥 L7EEEEEEFLA A MAMA 💥</button>
+            <button class="btn btn-secondary" onclick="arrayLehnaBoussti()">� ARRAY LEHNA BOUSSTI</button>
         </div>
     </div>
 
-    <div id="ui">
-        <div id="info">Shape: Sphere (Click to morph)</div>
-    </div>
-
-    <div id="controls">
-        <button id="shape-btn">Change Shape</button>
-
-        <div id="color-picker">
-            <div class="color-option" data-scheme="fire" style="background: linear-gradient(to bottom right, #ff4500, #ffcc00)"></div>
-            <div class="color-option" data-scheme="neon" style="background: linear-gradient(to bottom right, #ff00ff, #00ffff)"></div>
-            <div class="color-option" data-scheme="nature" style="background: linear-gradient(to bottom right, #00ff00, #66ffcc)"></div>
-            <div class="color-option" data-scheme="rainbow" style="background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet)"></div>
-        </div>
-    </div>
-
-    <canvas id="webglCanvas"></canvas>
-
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "https://cdn.jsdelivr.net/npm/three@0.163.0/build/three.module.js",
-          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.163.0/examples/jsm/",
-          "animejs": "https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.es.js",
-          "simplex-noise": "https://cdn.skypack.dev/simplex-noise@4.0.1"
-        }
-      }
-    </script>
-
-    <script type="module">
-        import * as THREE from 'three';
-        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-        import anime from 'animejs';
-        import { createNoise3D, createNoise4D } from 'simplex-noise';
-
-        let scene, camera, renderer, controls, clock;
-        let composer, bloomPass; 
-
-        let particlesGeometry, particlesMaterial, particleSystem;
-        let currentPositions, sourcePositions, targetPositions, swarmPositions; 
-        let particleSizes, particleOpacities, particleEffectStrengths; 
-        let noise3D, noise4D; 
-
-        let morphTimeline = null; 
-        let isInitialized = false;
-        let isMorphing = false;
-
-        const CONFIG = {
-            particleCount: 15000,
-            shapeSize: 14,
-            swarmDistanceFactor: 1.5,
-            swirlFactor: 4.0,
-            noiseFrequency: 0.1,
-            noiseTimeScale: 0.04,
-            noiseMaxStrength: 2.8,
-            colorScheme: 'fire',
-            morphDuration: 4000,
-            particleSizeRange: [0.08, 0.25],
-            starCount: 18000,
-            bloomStrength: 1.3,
-            bloomRadius: 0.5,
-            bloomThreshold: 0.05,
-            idleFlowStrength: 0.25,
-            idleFlowSpeed: 0.08,
-            idleRotationSpeed: 0.02,
-            morphSizeFactor: 0.5, 
-            morphBrightnessFactor: 0.6 
-        };
-
-        const SHAPES = [
-            { name: 'Sphere', generator: generateSphere },
-            { name: 'Cube', generator: generateCube },
-            { name: 'Pyramid', generator: generatePyramid },
-            { name: 'Torus', generator: generateTorus },
-            { name: 'Galaxy', generator: generateGalaxy },
-            { name: 'Wave', generator: generateWave }
+    <script>
+        // Messages d'amour à afficher
+        const loveMessages = [
+            "KANBGHIK 💖", "YA AGHLA MA3ENDI 🌟", "JENTI 💕", 
+            "HAPPY BIRTHDAY 🎉", "KAWNI 💖", "3WINATI ♥️",
+            "HAYATI 💫", "SA3ADTI 😊", "SIKILTI PIKILTI 🌈", "KOULCHI 💝",
+            "KANBGHIK BZAF 💗", "AGHLA MALAK 💞", "SIKOULA DANI 👑",
+            "ROHI 💓", "NOURTI 🌟", "PIKOUSSA L WIKOUSSA 💎"
         ];
-        let currentShapeIndex = 0;
 
-        const morphState = { progress: 0.0 };
-
-        const COLOR_SCHEMES = {
-            fire: { startHue: 0, endHue: 45, saturation: 0.95, lightness: 0.6 },
-            neon: { startHue: 300, endHue: 180, saturation: 1.0, lightness: 0.65 },
-            nature: { startHue: 90, endHue: 160, saturation: 0.85, lightness: 0.55 },
-            rainbow: { startHue: 0, endHue: 360, saturation: 0.9, lightness: 0.6 }
-        };
-
-        const tempVec = new THREE.Vector3();
-        const sourceVec = new THREE.Vector3();
-        const targetVec = new THREE.Vector3();
-        const swarmVec = new THREE.Vector3();
-        const noiseOffset = new THREE.Vector3();
-        const flowVec = new THREE.Vector3();
-        const bezPos = new THREE.Vector3();
-        const swirlAxis = new THREE.Vector3();
-        const currentVec = new THREE.Vector3();
-
-        function generateSphere(count, size) {
-            const points = new Float32Array(count * 3);
-            const phi = Math.PI * (Math.sqrt(5) - 1);
-            for (let i = 0; i < count; i++) {
-                const y = 1 - (i / (count - 1)) * 2;
-                const radius = Math.sqrt(1 - y * y);
-                const theta = phi * i;
-                const x = Math.cos(theta) * radius;
-                const z = Math.sin(theta) * radius;
-                points[i * 3] = x * size;
-                points[i * 3 + 1] = y * size;
-                points[i * 3 + 2] = z * size;
+        // Initialisation des particules
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            
+            // Créer des cœurs flottants
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'particle heart';
+                heart.innerHTML = '💖';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 6 + 's';
+                heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                particlesContainer.appendChild(heart);
             }
-            return points;
-        }
-        function generateCube(count, size) {
-            const points = new Float32Array(count * 3);
-            const halfSize = size / 2;
-            for (let i = 0; i < count; i++) {
-                const face = Math.floor(Math.random() * 6);
-                const u = Math.random() * size - halfSize;
-                const v = Math.random() * size - halfSize;
-                switch (face) {
-                    case 0: points.set([halfSize, u, v], i * 3); break;
-                    case 1: points.set([-halfSize, u, v], i * 3); break;
-                    case 2: points.set([u, halfSize, v], i * 3); break;
-                    case 3: points.set([u, -halfSize, v], i * 3); break;
-                    case 4: points.set([u, v, halfSize], i * 3); break;
-                    case 5: points.set([u, v, -halfSize], i * 3); break;
-                }
-            }
-            return points;
-        }
-        function generatePyramid(count, size) {
-            const points = new Float32Array(count * 3);
-            const halfBase = size / 2;
-            const height = size * 1.2;
-            const apex = new THREE.Vector3(0, height / 2, 0);
-            const baseVertices = [
-                new THREE.Vector3(-halfBase, -height / 2, -halfBase), new THREE.Vector3(halfBase, -height / 2, -halfBase),
-                new THREE.Vector3(halfBase, -height / 2, halfBase), new THREE.Vector3(-halfBase, -height / 2, halfBase)
-            ];
-            const baseArea = size * size;
-            const sideFaceHeight = Math.sqrt(Math.pow(height, 2) + Math.pow(halfBase, 2));
-            const sideFaceArea = 0.5 * size * sideFaceHeight;
-            const totalArea = baseArea + 4 * sideFaceArea;
-            const baseWeight = baseArea / totalArea;
-            const sideWeight = sideFaceArea / totalArea;
-            for (let i = 0; i < count; i++) {
-                const r = Math.random();
-                let p = new THREE.Vector3(); let u, v;
-                if (r < baseWeight) {
-                    u = Math.random(); v = Math.random();
-                    p.lerpVectors(baseVertices[0], baseVertices[1], u);
-                    const p2 = new THREE.Vector3().lerpVectors(baseVertices[3], baseVertices[2], u);
-                    p.lerp(p2, v);
-                } else {
-                    const faceIndex = Math.floor((r - baseWeight) / sideWeight);
-                    const v1 = baseVertices[faceIndex]; const v2 = baseVertices[(faceIndex + 1) % 4];
-                    u = Math.random(); v = Math.random();
-                    if (u + v > 1) { u = 1 - u; v = 1 - v; }
-                    p.addVectors(v1, tempVec.subVectors(v2, v1).multiplyScalar(u));
-                    p.add(tempVec.subVectors(apex, v1).multiplyScalar(v));
-                }
-                points.set([p.x, p.y, p.z], i * 3);
-            }
-            return points;
-        }
-        function generateTorus(count, size) {
-            const points = new Float32Array(count * 3);
-            const R = size * 0.7; const r = size * 0.3;
-            for (let i = 0; i < count; i++) {
-                const theta = Math.random() * Math.PI * 2; const phi = Math.random() * Math.PI * 2;
-                const x = (R + r * Math.cos(phi)) * Math.cos(theta);
-                const y = r * Math.sin(phi);
-                const z = (R + r * Math.cos(phi)) * Math.sin(theta);
-                points[i * 3] = x; points[i * 3 + 1] = y; points[i * 3 + 2] = z;
-            }
-            return points;
-        }
-        function generateGalaxy(count, size) {
-            const points = new Float32Array(count * 3);
-            const arms = 4; const armWidth = 0.6; const bulgeFactor = 0.3;
-            for (let i = 0; i < count; i++) {
-                const t = Math.pow(Math.random(), 1.5); const radius = t * size;
-                const armIndex = Math.floor(Math.random() * arms);
-                const armOffset = (armIndex / arms) * Math.PI * 2;
-                const rotationAmount = radius / size * 6; const angle = armOffset + rotationAmount;
-                const spread = (Math.random() - 0.5) * armWidth * (1 - radius / size);
-                const theta = angle + spread;
-                const x = radius * Math.cos(theta); const z = radius * Math.sin(theta);
-                const y = (Math.random() - 0.5) * size * 0.1 * (1 - radius / size * bulgeFactor);
-                points[i * 3] = x; points[i * 3 + 1] = y; points[i * 3 + 2] = z;
-            }
-            return points;
-        }
-        function generateWave(count, size) {
-            const points = new Float32Array(count * 3);
-            const waveScale = size * 0.4; const frequency = 3;
-            for (let i = 0; i < count; i++) {
-                const u = Math.random() * 2 - 1; const v = Math.random() * 2 - 1;
-                const x = u * size; const z = v * size;
-                const dist = Math.sqrt(u * u + v * v); const angle = Math.atan2(v, u);
-                const y = Math.sin(dist * Math.PI * frequency) * Math.cos(angle * 2) * waveScale * (1 - dist);
-                points[i * 3] = x; points[i * 3 + 1] = y; points[i * 3 + 2] = z;
-            }
-            return points;
-        }
-
-        function init() {
-            let progress = 0;
-            const progressBar = document.getElementById('progress');
-            const loadingScreen = document.getElementById('loading');
-            function updateProgress(increment) {
-                progress += increment;
-                progressBar.style.width = `${Math.min(100, progress)}%`;
-                if (progress >= 100) {
-                    setTimeout(() => {
-                        loadingScreen.style.opacity = '0';
-                        setTimeout(() => { loadingScreen.style.display = 'none'; }, 600);
-                    }, 200);
-                }
-            }
-
-            clock = new THREE.Clock();
-            noise3D = createNoise3D(() => Math.random());
-            noise4D = createNoise4D(() => Math.random());
-            scene = new THREE.Scene();
-            scene.fog = new THREE.FogExp2(0x000308, 0.03);
-            updateProgress(5);
-
-            camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.set(0, 8, 28); 
-            camera.lookAt(scene.position);
-            updateProgress(5);
-
-            const canvas = document.getElementById('webglCanvas');
-            renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            renderer.toneMapping = THREE.ACESFilmicToneMapping;
-            renderer.toneMappingExposure = 1.1;
-            updateProgress(10);
-
-            controls = new OrbitControls(camera, renderer.domElement);
-            controls.enableDamping = true; controls.dampingFactor = 0.05;
-            controls.minDistance = 5; controls.maxDistance = 80;
-            controls.autoRotate = true; controls.autoRotateSpeed = 0.3;
-            updateProgress(5);
-
-            scene.add(new THREE.AmbientLight(0x404060));
-            const dirLight1 = new THREE.DirectionalLight(0xffffff, 1.5);
-            dirLight1.position.set(15, 20, 10); scene.add(dirLight1);
-            const dirLight2 = new THREE.DirectionalLight(0x88aaff, 0.9);
-            dirLight2.position.set(-15, -10, -15); scene.add(dirLight2);
-            updateProgress(10);
-
-            setupPostProcessing(); updateProgress(10);
-            createStarfield(); updateProgress(15);
-            setupParticleSystem(); updateProgress(25);
-
-            window.addEventListener('resize', onWindowResize);
-            window.addEventListener('click', onCanvasClick);
-            document.getElementById('shape-btn').addEventListener('click', triggerMorph);
-            document.querySelectorAll('.color-option').forEach(option => {
-                option.addEventListener('click', (e) => {
-                    document.querySelectorAll('.color-option').forEach(o => o.classList.remove('active'));
-                    e.target.classList.add('active');
-                    CONFIG.colorScheme = e.target.dataset.scheme;
-                    updateColors();
-                });
-            });
-            document.querySelector(`.color-option[data-scheme="${CONFIG.colorScheme}"]`).classList.add('active');
-            updateProgress(15);
-
-            isInitialized = true;
-            animate();
-            console.log("Initialization complete.");
-        }
-
-        function setupPostProcessing() {
-            composer = new EffectComposer(renderer);
-            composer.addPass(new RenderPass(scene, camera));
-            bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), CONFIG.bloomStrength, CONFIG.bloomRadius, CONFIG.bloomThreshold);
-            composer.addPass(bloomPass);
-        }
-
-        function createStarfield() {
-            const starVertices = []; const starSizes = []; const starColors = [];
-            const starGeometry = new THREE.BufferGeometry();
-            for (let i = 0; i < CONFIG.starCount; i++) {
-                tempVec.set( THREE.MathUtils.randFloatSpread(400), THREE.MathUtils.randFloatSpread(400), THREE.MathUtils.randFloatSpread(400) );
-                if (tempVec.length() < 100) tempVec.setLength(100 + Math.random() * 300);
-                starVertices.push(tempVec.x, tempVec.y, tempVec.z);
-                starSizes.push(Math.random() * 0.15 + 0.05);
-                const color = new THREE.Color();
-                if (Math.random() < 0.1) { color.setHSL(Math.random(), 0.7, 0.65); } else { color.setHSL(0.6, Math.random() * 0.1, 0.8 + Math.random() * 0.2); }
-                starColors.push(color.r, color.g, color.b);
-            }
-            starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
-            starGeometry.setAttribute('color', new THREE.Float32BufferAttribute(starColors, 3));
-            starGeometry.setAttribute('size', new THREE.Float32BufferAttribute(starSizes, 1));
-            const starMaterial = new THREE.ShaderMaterial({
-                 uniforms: { pointTexture: { value: createStarTexture() } },
-                 vertexShader: `
-                      attribute float size; varying vec3 vColor; varying float vSize;
-                      void main() {
-                           vColor = color; vSize = size; vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-                           gl_PointSize = size * (400.0 / -mvPosition.z); gl_Position = projectionMatrix * mvPosition;
-                      }`,
-                 fragmentShader: `
-                      uniform sampler2D pointTexture; varying vec3 vColor; varying float vSize;
-                      void main() {
-                           float alpha = texture2D(pointTexture, gl_PointCoord).a; if (alpha < 0.1) discard;
-                           gl_FragColor = vec4(vColor, alpha * 0.9);
-                      }`,
-                 blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, vertexColors: true
-             });
-            scene.add(new THREE.Points(starGeometry, starMaterial));
-        }
-
-        function createStarTexture() {
-            const size = 64; const canvas = document.createElement('canvas');
-            canvas.width = size; canvas.height = size; const context = canvas.getContext('2d');
-            const gradient = context.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
-            gradient.addColorStop(0, 'rgba(255,255,255,1)'); gradient.addColorStop(0.2, 'rgba(255,255,255,0.8)');
-            gradient.addColorStop(0.5, 'rgba(255,255,255,0.3)'); gradient.addColorStop(1, 'rgba(255,255,255,0)');
-            context.fillStyle = gradient; context.fillRect(0, 0, size, size);
-            return new THREE.CanvasTexture(canvas);
-        }
-
-        function setupParticleSystem() {
-            targetPositions = SHAPES.map(shape => shape.generator(CONFIG.particleCount, CONFIG.shapeSize));
-            particlesGeometry = new THREE.BufferGeometry();
-
-            currentPositions = new Float32Array(targetPositions[0]);
-            sourcePositions = new Float32Array(targetPositions[0]);
-            swarmPositions = new Float32Array(CONFIG.particleCount * 3);
-            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(currentPositions, 3));
-
-            particleSizes = new Float32Array(CONFIG.particleCount);
-            particleOpacities = new Float32Array(CONFIG.particleCount);
-            particleEffectStrengths = new Float32Array(CONFIG.particleCount);
-            for (let i = 0; i < CONFIG.particleCount; i++) {
-                particleSizes[i] = THREE.MathUtils.randFloat(CONFIG.particleSizeRange[0], CONFIG.particleSizeRange[1]);
-                particleOpacities[i] = 1.0;
-                particleEffectStrengths[i] = 0.0;
-            }
-            particlesGeometry.setAttribute('size', new THREE.BufferAttribute(particleSizes, 1));
-            particlesGeometry.setAttribute('opacity', new THREE.BufferAttribute(particleOpacities, 1));
-            particlesGeometry.setAttribute('aEffectStrength', new THREE.BufferAttribute(particleEffectStrengths, 1));
-
-            const colors = new Float32Array(CONFIG.particleCount * 3);
-            updateColorArray(colors, currentPositions);
-            particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-            particlesMaterial = new THREE.ShaderMaterial({
-                 uniforms: {
-                      pointTexture: { value: createStarTexture() }
-                 },
-                 vertexShader: `
-                      attribute float size;
-                      attribute float opacity;
-                      attribute float aEffectStrength;
-                      varying vec3 vColor;
-                      varying float vOpacity;
-                      varying float vEffectStrength;
-
-                      void main() {
-                           vColor = color;
-                           vOpacity = opacity;
-                           vEffectStrength = aEffectStrength;
-
-                           vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-
-                           float sizeScale = 1.0 - vEffectStrength * ${CONFIG.morphSizeFactor.toFixed(2)};
-                           gl_PointSize = size * sizeScale * (400.0 / -mvPosition.z);
-
-                           gl_Position = projectionMatrix * mvPosition;
-                      }
-                 `,
-                 fragmentShader: `
-                      uniform sampler2D pointTexture;
-                      varying vec3 vColor;
-                      varying float vOpacity;
-                      varying float vEffectStrength;
-
-                      void main() {
-                           float alpha = texture2D(pointTexture, gl_PointCoord).a;
-                           if (alpha < 0.05) discard;
-
-                           vec3 finalColor = vColor * (1.0 + vEffectStrength * ${CONFIG.morphBrightnessFactor.toFixed(2)});
-
-                           gl_FragColor = vec4(finalColor, alpha * vOpacity);
-                      }
-                 `,
-                 blending: THREE.AdditiveBlending,
-                 depthTest: true,
-                 depthWrite: false,
-                 transparent: true,
-                 vertexColors: true
-            });
-
-            particleSystem = new THREE.Points(particlesGeometry, particlesMaterial);
-            scene.add(particleSystem);
-        }
-
-        function updateColorArray(colors, positionsArray) {
-            const colorScheme = COLOR_SCHEMES[CONFIG.colorScheme];
-            const center = new THREE.Vector3(0, 0, 0);
-            const maxRadius = CONFIG.shapeSize * 1.1;
-            for (let i = 0; i < CONFIG.particleCount; i++) {
-                const i3 = i * 3;
-                tempVec.fromArray(positionsArray, i3);
-                const dist = tempVec.distanceTo(center);
-                let hue;
-                if (CONFIG.colorScheme === 'rainbow') {
-                    const normX = (tempVec.x / maxRadius + 1) / 2; const normY = (tempVec.y / maxRadius + 1) / 2; const normZ = (tempVec.z / maxRadius + 1) / 2;
-                    hue = (normX * 120 + normY * 120 + normZ * 120) % 360;
-                } else {
-                    hue = THREE.MathUtils.mapLinear( dist, 0, maxRadius, colorScheme.startHue, colorScheme.endHue );
-                }
-                const noiseValue = (noise3D(tempVec.x * 0.2, tempVec.y * 0.2, tempVec.z * 0.2) + 1) * 0.5;
-                const saturation = THREE.MathUtils.clamp(colorScheme.saturation * (0.9 + noiseValue * 0.2), 0, 1);
-                const lightness = THREE.MathUtils.clamp(colorScheme.lightness * (0.85 + noiseValue * 0.3), 0.1, 0.9);
-                const color = new THREE.Color().setHSL(hue / 360, saturation, lightness);
-                color.toArray(colors, i3);
+            
+            // Créer des étoiles scintillantes
+            for (let i = 0; i < 15; i++) {
+                const star = document.createElement('div');
+                star.className = 'particle star';
+                star.innerHTML = '✨';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                particlesContainer.appendChild(star);
             }
         }
 
-        function updateColors() {
-            const colors = particlesGeometry.attributes.color.array;
-            updateColorArray(colors, particlesGeometry.attributes.position.array);
-            particlesGeometry.attributes.color.needsUpdate = true;
-        }
-
-        function triggerMorph() {
-            if (isMorphing) return;
-            isMorphing = true; controls.autoRotate = false; console.log("Morphing triggered...");
-            document.getElementById('info').innerText = `Morphing...`;
-            document.getElementById('info').style.textShadow = '0 0 8px rgba(255, 150, 50, 0.9)';
-            sourcePositions.set(currentPositions);
-            const nextShapeIndex = (currentShapeIndex + 1) % SHAPES.length;
-            const nextTargetPositions = targetPositions[nextShapeIndex];
-            const centerOffsetAmount = CONFIG.shapeSize * CONFIG.swarmDistanceFactor;
-            for (let i = 0; i < CONFIG.particleCount; i++) {
-                const i3 = i * 3;
-                sourceVec.fromArray(sourcePositions, i3); targetVec.fromArray(nextTargetPositions, i3);
-                swarmVec.lerpVectors(sourceVec, targetVec, 0.5);
-                const offsetDir = tempVec.set( noise3D(i * 0.05, 10, 10), noise3D(20, i * 0.05, 20), noise3D(30, 30, i * 0.05) ).normalize();
-                const distFactor = sourceVec.distanceTo(targetVec) * 0.1 + centerOffsetAmount;
-                swarmVec.addScaledVector(offsetDir, distFactor * (0.5 + Math.random() * 0.8));
-                swarmPositions[i3] = swarmVec.x; swarmPositions[i3 + 1] = swarmVec.y; swarmPositions[i3 + 2] = swarmVec.z;
-            }
-            currentShapeIndex = nextShapeIndex;
-            morphState.progress = 0;
-            if (morphTimeline) morphTimeline.pause();
-            morphTimeline = anime({
-                 targets: morphState, progress: 1, duration: CONFIG.morphDuration, easing: 'cubicBezier(0.4, 0.0, 0.2, 1.0)',
-                 complete: () => {
-                     console.log("Morphing complete.");
-                     document.getElementById('info').innerText = `Shape: ${SHAPES[currentShapeIndex].name} (Click to morph)`;
-                     document.getElementById('info').style.textShadow = '0 0 5px rgba(0, 128, 255, 0.8)';
-                     currentPositions.set(targetPositions[currentShapeIndex]);
-                     particlesGeometry.attributes.position.needsUpdate = true;
-                     particleEffectStrengths.fill(0.0);
-                     particlesGeometry.attributes.aEffectStrength.needsUpdate = true;
-                     sourcePositions.set(targetPositions[currentShapeIndex]);
-                     updateColors();
-                     isMorphing = false; controls.autoRotate = true;
-                 }
-            });
-        }
-
-        function animate() {
-            requestAnimationFrame(animate);
-            if (!isInitialized) return;
-            const elapsedTime = clock.getElapsedTime();
-            const deltaTime = clock.getDelta();
-            controls.update();
-            const positions = particlesGeometry.attributes.position.array;
-            const effectStrengths = particlesGeometry.attributes.aEffectStrength.array;
-
-            if (isMorphing) {
-                updateMorphAnimation(positions, effectStrengths, elapsedTime, deltaTime);
+        // Ouvrir la lettre d'amour avec effets ÉPIQUES
+        document.getElementById('loveLetter').addEventListener('click', function() {
+            const envelope = document.getElementById('envelope');
+            envelope.classList.toggle('open');
+            
+            if (envelope.classList.contains('open')) {
+                // EXPLOSION d'effets quand la lettre s'ouvre !
+                createMagicLetterEffects();
+                createConfetti();
+                showLoveMessage();
+                
+                // Son visuel d'ouverture
+                envelope.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    envelope.style.transform = 'scale(1)';
+                }, 300);
+                
+                // Particules spéciales autour de la lettre
+                createLetterParticles();
             } else {
-                updateIdleAnimation(positions, effectStrengths, elapsedTime, deltaTime);
+                // Effet de fermeture
+                envelope.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    envelope.style.transform = 'scale(1)';
+                }, 200);
             }
-            particlesGeometry.attributes.position.needsUpdate = true;
-            if (isMorphing || particlesGeometry.attributes.aEffectStrength.needsUpdate) {
-                 particlesGeometry.attributes.aEffectStrength.needsUpdate = true;
+        });
+
+        // Nouvelles fonctions pour des effets de lettre magiques
+        function createMagicLetterEffects() {
+            const letterElement = document.getElementById('loveLetter');
+            
+            // Créer des cœurs qui s'échappent de la lettre
+            for (let i = 0; i < 12; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '💖';
+                    heart.style.position = 'absolute';
+                    heart.style.left = '50%';
+                    heart.style.top = '50%';
+                    heart.style.transform = 'translate(-50%, -50%)';
+                    heart.style.fontSize = (Math.random() * 15 + 20) + 'px';
+                    heart.style.pointerEvents = 'none';
+                    heart.style.zIndex = '1000';
+                    heart.style.animation = `heartEscape${i} 3s ease-out forwards`;
+                    letterElement.appendChild(heart);
+                    
+                    // Animation unique pour chaque cœur
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        @keyframes heartEscape${i} {
+                            0% { 
+                                transform: translate(-50%, -50%) scale(0);
+                                opacity: 1;
+                            }
+                            50% { 
+                                transform: translate(${(Math.random() - 0.5) * 200}px, ${-Math.random() * 100 - 50}px) scale(1.2);
+                                opacity: 1;
+                            }
+                            100% { 
+                                transform: translate(${(Math.random() - 0.5) * 400}px, ${-Math.random() * 200 - 100}px) scale(0);
+                                opacity: 0;
+                            }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                        style.remove();
+                    }, 3000);
+                }, i * 150);
             }
-            composer.render(deltaTime);
         }
 
-        function updateMorphAnimation(positions, effectStrengths, elapsedTime, deltaTime) {
-            const t = morphState.progress;
-            const targets = targetPositions[currentShapeIndex];
-            const effectStrength = Math.sin(t * Math.PI);
-            const currentSwirl = effectStrength * CONFIG.swirlFactor * deltaTime * 50;
-            const currentNoise = effectStrength * CONFIG.noiseMaxStrength;
+        function createLetterParticles() {
+            const letterElement = document.getElementById('loveLetter');
+            const rect = letterElement.getBoundingClientRect();
+            
+            // Étoiles scintillantes autour de la lettre
+            for (let i = 0; i < 20; i++) {
+                const star = document.createElement('div');
+                star.innerHTML = '✨';
+                star.style.position = 'fixed';
+                star.style.left = (rect.left + Math.random() * rect.width) + 'px';
+                star.style.top = (rect.top + Math.random() * rect.height) + 'px';
+                star.style.fontSize = (Math.random() * 10 + 15) + 'px';
+                star.style.pointerEvents = 'none';
+                star.style.zIndex = '999';
+                star.style.animation = 'twinkleAndFade 2s ease-out forwards';
+                document.body.appendChild(star);
+                
+                setTimeout(() => {
+                    star.remove();
+                }, 2000);
+            }
+        }
 
-            for (let i = 0; i < CONFIG.particleCount; i++) {
-                const i3 = i * 3;
-                sourceVec.fromArray(sourcePositions, i3);
-                swarmVec.fromArray(swarmPositions, i3);
-                targetVec.fromArray(targets, i3);
+        // Créer des confettis
+        function createConfetti() {
+            const colors = ['#ff6b6b', '#ffd93d', '#4ecdc4', '#45b7d1', '#ff9a9e', '#fecfef'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                document.body.appendChild(confetti);
+                
+                // Supprimer le confetti après l'animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
 
-                const t_inv = 1.0 - t; const t_inv_sq = t_inv * t_inv; const t_sq = t * t;
-                bezPos.copy(sourceVec).multiplyScalar(t_inv_sq);
-                bezPos.addScaledVector(swarmVec, 2.0 * t_inv * t);
-                bezPos.addScaledVector(targetVec, t_sq);
+        // Afficher un message d'amour flottant
+        function showLoveMessage() {
+            const messagesContainer = document.getElementById('loveMessages');
+            const message = document.createElement('div');
+            message.className = 'love-message';
+            message.textContent = loveMessages[Math.floor(Math.random() * loveMessages.length)];
+            message.style.left = Math.random() * 80 + 10 + '%';
+            messagesContainer.appendChild(message);
+            
+            // Supprimer le message après l'animation
+            setTimeout(() => {
+                message.remove();
+            }, 4000);
+        }
 
-                if (currentSwirl > 0.01) {
-                    tempVec.subVectors(bezPos, sourceVec);
-                    swirlAxis.set( noise3D(i * 0.02, elapsedTime * 0.1, 0), noise3D(0, i * 0.02, elapsedTime * 0.1 + 5), noise3D(elapsedTime * 0.1 + 10, 0, i * 0.02) ).normalize();
-                    tempVec.applyAxisAngle(swirlAxis, currentSwirl * (0.5 + Math.random() * 0.5));
-                    bezPos.copy(sourceVec).add(tempVec);
+        // Fonction EXPLOSION D'AMOUR - Version ultra créative!
+        function explosionDamour() {
+            // Explosion massive de confettis multi-couleurs
+            for (let wave = 0; wave < 5; wave++) {
+                setTimeout(() => {
+                    createMegaConfetti();
+                }, wave * 300);
+            }
+            
+            // Messages d'amour en cascade
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    showExplosiveLoveMessage();
+                }, i * 200);
+            }
+            
+            // Effet de zoom pulsant sur tout l'écran
+            document.body.style.animation = 'explosionPulse 2s ease-in-out';
+            setTimeout(() => {
+                document.body.style.animation = '';
+            }, 2000);
+            
+            // Changer temporairement les couleurs de fond
+            document.body.style.background = 'linear-gradient(45deg, #ff6b6b, #ffd93d, #4ecdc4, #45b7d1, #ff9a9e, #fecfef)';
+            document.body.style.backgroundSize = '400% 400%';
+            document.body.style.animation += ', rainbowBackground 3s ease infinite';
+            
+            setTimeout(() => {
+                document.body.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)';
+                document.body.style.backgroundSize = '';
+            }, 5000);
+        }
+
+        // Fonction ARRAY LEHNA BOUSSTI - Pluie de bisous épique!
+        function arrayLehnaBoussti() {
+            const boussi = ['💋', '😘', '😗', '😙', '🥰', '💖', '❤️', '💕', '💗', '💓'];
+            
+            // Créer une vraie tempête de bisous
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const kiss = document.createElement('div');
+                    kiss.className = 'love-message';
+                    kiss.textContent = boussi[Math.floor(Math.random() * boussi.length)];
+                    kiss.style.left = Math.random() * 95 + 2.5 + '%';
+                    kiss.style.fontSize = (Math.random() * 25 + 35) + 'px';
+                    kiss.style.color = `hsl(${Math.random() * 360}, 70%, 60%)`;
+                    kiss.style.textShadow = '0 0 10px rgba(255, 182, 193, 0.8)';
+                    document.getElementById('loveMessages').appendChild(kiss);
+                    
+                    setTimeout(() => {
+                        kiss.remove();
+                    }, 4000);
+                }, i * 150);
+            }
+            
+            // Messages en darija qui accompagnent - NOUVELLES PHRASES
+            const messagesLehna = [
+                'A PEEEENDI KANBGHIK 💋', 
+                'A MAMAA ANAA CHHAAAL KANDOUB FIK A PENDI A HOUYAAAAMI 😘', 
+                'KANBGHIK A JENTI 💖'
+            ];
+            messagesLehna.forEach((msg, index) => {
+                setTimeout(() => {
+                    const loveMsg = document.createElement('div');
+                    loveMsg.className = 'love-message';
+                    loveMsg.textContent = msg;
+                    loveMsg.style.left = Math.random() * 70 + 15 + '%';
+                    loveMsg.style.fontSize = '32px';
+                    loveMsg.style.fontWeight = 'bold';
+                    loveMsg.style.color = '#ff6b6b';
+                    loveMsg.style.textShadow = '0 0 15px rgba(255, 107, 107, 0.8)';
+                    document.getElementById('loveMessages').appendChild(loveMsg);
+                    
+                    setTimeout(() => {
+                        loveMsg.remove();
+                    }, 6000);
+                }, index * 1200);
+            });
+        }
+
+        // Nouvelles fonctions helper pour des effets encore plus fous
+        function createMegaConfetti() {
+            const colors = ['#ff6b6b', '#ffd93d', '#4ecdc4', '#45b7d1', '#ff9a9e', '#fecfef', '#a8e6cf', '#dcedc8'];
+            
+            for (let i = 0; i < 80; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = (Math.random() * 8 + 6) + 'px';
+                confetti.style.height = (Math.random() * 8 + 6) + 'px';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0%';
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 6000);
+            }
+        }
+
+        function showExplosiveLoveMessage() {
+            const explosiveMessages = [
+                'BOOOOOOM BOOOM L WIPOUSS HAPPY BIRTHDAAAAAY �🎉', 
+                'HAPPY BIRTHDAAAAAAY MAMAAAAAAAA KANMOUTE FIIIIIIIIIIIIIIIIIIIIIK 🎂�'
+            ];
+            
+            const message = document.createElement('div');
+            message.className = 'love-message';
+            message.textContent = explosiveMessages[Math.floor(Math.random() * explosiveMessages.length)];
+            message.style.left = Math.random() * 70 + 15 + '%';
+            message.style.fontSize = (Math.random() * 10 + 35) + 'px';
+            message.style.fontWeight = 'bold';
+            message.style.color = `hsl(${Math.random() * 60 + 300}, 90%, 70%)`;  // Couleurs plus vives
+            message.style.textShadow = '0 0 20px rgba(255, 215, 61, 1), 0 0 30px rgba(255, 107, 107, 0.8)';
+            document.getElementById('loveMessages').appendChild(message);
+            
+            setTimeout(() => {
+                message.remove();
+            }, 5000);
+        }
+
+        // Animations épiques pour les effets spéciaux
+        const epicAnimations = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-5px); }
+                75% { transform: translateX(5px); }
+            }
+            
+            @keyframes explosionPulse {
+                0%, 100% { transform: scale(1); }
+                25% { transform: scale(1.05) rotate(1deg); }
+                50% { transform: scale(1.1) rotate(-1deg); }
+                75% { transform: scale(1.05) rotate(1deg); }
+            }
+            
+            @keyframes rainbowBackground {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+            
+            @keyframes superGlow {
+                0%, 100% { 
+                    text-shadow: 0 0 20px rgba(255, 107, 107, 0.8), 
+                                 0 0 40px rgba(255, 215, 61, 0.6),
+                                 0 0 60px rgba(78, 205, 196, 0.4);
                 }
-
-                if (currentNoise > 0.01) {
-                    const noiseTime = elapsedTime * CONFIG.noiseTimeScale;
-                    noiseOffset.set( noise4D(bezPos.x * CONFIG.noiseFrequency, bezPos.y * CONFIG.noiseFrequency, bezPos.z * CONFIG.noiseFrequency, noiseTime), noise4D(bezPos.x * CONFIG.noiseFrequency + 100, bezPos.y * CONFIG.noiseFrequency + 100, bezPos.z * CONFIG.noiseFrequency + 100, noiseTime), noise4D(bezPos.x * CONFIG.noiseFrequency + 200, bezPos.y * CONFIG.noiseFrequency + 200, bezPos.z * CONFIG.noiseFrequency + 200, noiseTime) );
-                    bezPos.addScaledVector(noiseOffset, currentNoise);
-                }
-
-                positions[i3] = bezPos.x;
-                positions[i3 + 1] = bezPos.y;
-                positions[i3 + 2] = bezPos.z;
-
-                effectStrengths[i] = effectStrength;
-            }
-             particlesGeometry.attributes.aEffectStrength.needsUpdate = true;
-        }
-
-        function updateIdleAnimation(positions, effectStrengths, elapsedTime, deltaTime) {
-            const breathScale = 1.0 + Math.sin(elapsedTime * 0.5) * 0.015;
-            const timeScaled = elapsedTime * CONFIG.idleFlowSpeed;
-            const freq = 0.1;
-
-            let needsEffectStrengthReset = false;
-
-            for (let i = 0; i < CONFIG.particleCount; i++) {
-                const i3 = i * 3;
-                sourceVec.fromArray(sourcePositions, i3);
-                tempVec.copy(sourceVec).multiplyScalar(breathScale);
-                flowVec.set( noise4D(tempVec.x * freq, tempVec.y * freq, tempVec.z * freq, timeScaled), noise4D(tempVec.x * freq + 10, tempVec.y * freq + 10, tempVec.z * freq + 10, timeScaled), noise4D(tempVec.x * freq + 20, tempVec.y * freq + 20, tempVec.z * freq + 20, timeScaled) );
-                tempVec.addScaledVector(flowVec, CONFIG.idleFlowStrength);
-                currentVec.fromArray(positions, i3);
-                currentVec.lerp(tempVec, 0.05);
-                positions[i3] = currentVec.x;
-                positions[i3 + 1] = currentVec.y;
-                positions[i3 + 2] = currentVec.z;
-
-                if (effectStrengths[i] !== 0.0) {
-                    effectStrengths[i] = 0.0;
-                    needsEffectStrengthReset = true;
+                50% { 
+                    text-shadow: 0 0 30px rgba(255, 107, 107, 1), 
+                                 0 0 60px rgba(255, 215, 61, 0.8),
+                                 0 0 90px rgba(78, 205, 196, 0.6);
                 }
             }
-             if (needsEffectStrengthReset) {
-                 particlesGeometry.attributes.aEffectStrength.needsUpdate = true;
-             }
+            
+            @keyframes megaBounce {
+                0%, 100% { transform: translateY(0) scale(1); }
+                25% { transform: translateY(-15px) scale(1.1); }
+                50% { transform: translateY(-25px) scale(1.15); }
+                75% { transform: translateY(-15px) scale(1.1); }
+            }
+            
+            @keyframes twinkleAndFade {
+                0% { 
+                    opacity: 0;
+                    transform: scale(0) rotate(0deg);
+                }
+                20% { 
+                    opacity: 1;
+                    transform: scale(1.3) rotate(90deg);
+                }
+                80% { 
+                    opacity: 1;
+                    transform: scale(1) rotate(270deg);
+                }
+                100% { 
+                    opacity: 0;
+                    transform: scale(0) rotate(360deg);
+                }
+            }
+            
+            @keyframes mouseParticleFade {
+                0% { 
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+                100% { 
+                    opacity: 0;
+                    transform: translateY(-30px) scale(0.3);
+                }
+            }
+        `;
+        
+        const style = document.createElement('style');
+        style.textContent = epicAnimations;
+        document.head.appendChild(style);
+
+        // Messages automatiques toutes les 3 secondes
+        setInterval(() => {
+            if (Math.random() > 0.3) { // 70% de chance d'afficher un message
+                showLoveMessage();
+            }
+        }, 3000);
+
+        // Initialisation au chargement de la page
+        window.addEventListener('load', () => {
+            createParticles();
+            
+            // Message de bienvenue après 2 secondes
+            setTimeout(() => {
+                showLoveMessage();
+            }, 2000);
+            
+            // Effet de particules qui suivent la souris
+            setupMouseTrail();
+        });
+
+        // Particules qui suivent la souris
+        function setupMouseTrail() {
+            let mouseTrail = [];
+            const maxTrailLength = 15;
+            
+            document.addEventListener('mousemove', (e) => {
+                // Ajouter une nouvelle particule à la position de la souris
+                const particle = {
+                    x: e.clientX,
+                    y: e.clientY,
+                    life: maxTrailLength
+                };
+                
+                mouseTrail.push(particle);
+                
+                // Limiter la longueur du trail
+                if (mouseTrail.length > maxTrailLength) {
+                    mouseTrail.shift();
+                }
+                
+                // Créer l'effet visuel
+                if (Math.random() > 0.7) { // 30% de chance de créer une particule
+                    createMouseParticle(e.clientX, e.clientY);
+                }
+            });
         }
 
-        function onCanvasClick(event) {
-            if (event.target.closest('#controls')) { return; }
-            triggerMorph();
+        function createMouseParticle(x, y) {
+            const particles = ['✨', '💖', '🌟', '💫', '💕'];
+            const particle = document.createElement('div');
+            particle.innerHTML = particles[Math.floor(Math.random() * particles.length)];
+            particle.style.position = 'fixed';
+            particle.style.left = x + 'px';
+            particle.style.top = y + 'px';
+            particle.style.fontSize = (Math.random() * 8 + 12) + 'px';
+            particle.style.pointerEvents = 'none';
+            particle.style.zIndex = '10000';
+            particle.style.animation = 'mouseParticleFade 1.5s ease-out forwards';
+            document.body.appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 1500);
         }
 
-        function onWindowResize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            composer.setSize(window.innerWidth, window.innerHeight);
-        }
+        // Ajouter des effets sonores visuels au survol des boutons
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                btn.style.transform = 'translateY(-3px) scale(1.05)';
+            });
+            
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translateY(0) scale(1)';
+            });
+        });
 
-        init();
+        // Effet de clic sur le titre
+        document.querySelector('.main-title').addEventListener('click', () => {
+            createConfetti();
+            showLoveMessage();
+        });
 
+        // Effet au clic sur le gâteau - MEGA CELEBRATION!
+        document.querySelector('.cake-container').addEventListener('click', () => {
+            const flame = document.querySelector('.flame');
+            flame.style.animation = 'none';
+            setTimeout(() => {
+                flame.style.animation = 'flicker 1s ease-in-out infinite alternate';
+            }, 100);
+            
+            // MEGA CELEBRATION CAKE!
+            explosionDamour();
+            
+            // Messages spéciaux pour le gâteau
+            const cakeMessages = ['SOUFFLEZ LA BOUGIE! 🕯️', 'MAKE A WISH! ✨', 'TMANNA OMNIA! 🌟'];
+            cakeMessages.forEach((msg, index) => {
+                setTimeout(() => {
+                    const wishMsg = document.createElement('div');
+                    wishMsg.className = 'love-message';
+                    wishMsg.textContent = msg;
+                    wishMsg.style.left = '50%';
+                    wishMsg.style.transform = 'translateX(-50%)';
+                    wishMsg.style.fontSize = '32px';
+                    wishMsg.style.fontWeight = 'bold';
+                    wishMsg.style.color = '#ffd93d';
+                    wishMsg.style.textShadow = '0 0 20px rgba(255, 215, 61, 1)';
+                    document.getElementById('loveMessages').appendChild(wishMsg);
+                    
+                    setTimeout(() => {
+                        wishMsg.remove();
+                    }, 3000);
+                }, index * 1000);
+            });
+        });
+
+        // Double-click pour effet secret ultra spécial
+        document.addEventListener('dblclick', () => {
+            // Mode ULTRA CELEBRATION secret!
+            document.body.style.animation = 'explosionPulse 0.5s ease-in-out, rainbowBackground 2s ease infinite';
+            
+            // Particules dorées spéciales
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const goldenParticle = document.createElement('div');
+                    goldenParticle.innerHTML = '✨';
+                    goldenParticle.className = 'particle star';
+                    goldenParticle.style.position = 'fixed';
+                    goldenParticle.style.left = Math.random() * 100 + '%';
+                    goldenParticle.style.top = Math.random() * 100 + '%';
+                    goldenParticle.style.fontSize = (Math.random() * 20 + 25) + 'px';
+                    goldenParticle.style.color = '#ffd700';
+                    goldenParticle.style.zIndex = '1000';
+                    goldenParticle.style.animation = 'twinkle 1s ease-in-out infinite, float 3s ease-in-out infinite';
+                    document.body.appendChild(goldenParticle);
+                    
+                    setTimeout(() => {
+                        goldenParticle.remove();
+                    }, 5000);
+                }, i * 50);
+            }
+            
+            // Message secret
+            setTimeout(() => {
+                const secretMsg = document.createElement('div');
+                secretMsg.className = 'love-message';
+                secretMsg.textContent = '🎊 SECRET ULTRA CELEBRATION UNLOCKED! 🎊';
+                secretMsg.style.left = '50%';
+                secretMsg.style.transform = 'translateX(-50%)';
+                secretMsg.style.fontSize = '28px';
+                secretMsg.style.fontWeight = 'bold';
+                secretMsg.style.color = '#ff6b6b';
+                secretMsg.style.textShadow = '0 0 25px rgba(255, 107, 107, 1)';
+                document.getElementById('loveMessages').appendChild(secretMsg);
+                
+                setTimeout(() => {
+                    secretMsg.remove();
+                }, 4000);
+            }, 500);
+        });
     </script>
+</body>
+</html>
